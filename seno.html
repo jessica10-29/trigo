@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfica de la Función Seno</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+      background-color: #afeaf1;
+    }
+    h1 {
+      color: #070101;
+    }
+    p {
+      max-width: 750px;
+      margin: 0 auto 30px auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    canvas {
+      background-color: #e7e5e5;
+      border: 1px solid #f7f1f1;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gráfica de la Función Seno</h1>
+  <p>Esta gráfica muestra cómo varía la función seno entre 0° y 360°.</p>
+
+  <canvas id="senoChart" width="600" height="400"></canvas>
+
+  <script>
+    const labels = [];
+    const data = [];
+
+    for (let x = 0; x <= 360; x += 5) {
+      labels.push(x); // Grados
+      data.push(Math.sin(x * Math.PI / 180)); 
+    }
+
+    const ctx = document.getElementById('senoChart').getContext('2d');
+    const senoChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'sin(x)',
+          data: data,
+          borderColor: 'red',
+          borderWidth: 2,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Ángulo (grados)'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'sin(x)'
+            },
+            min: -1,
+            max: 1
+          }
+        }
+      }
+    });
+  </script>
+  <a href="index.html">ir al inicio</a>
+
+</body>
+</html>

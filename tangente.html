@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Función Tangente</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+      background-color: #a0eaf5;
+    }
+    h1 {
+      color: #070101;
+    }
+    p {
+      max-width: 750px;
+      margin: 0 auto 30px auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    canvas {
+      background-color: #f6f7f8;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Función Tangente</h1>
+
+  <p>
+    La <strong>función tangente</strong> es una función trigonométrica que se define como la razón entre el cateto opuesto y el cateto adyacente en un triángulo rectángulo.
+    Se representa como <code>tan(x)</code>. A diferencia del seno y el coseno, la tangente puede tomar valores muy grandes o muy pequeños, y presenta
+    <strong>asíntotas verticales</strong> en los puntos donde <code>cos(x) = 0</code>, es decir, en <code>90°, 270°, etc.</code>.
+  </p>
+
+  <canvas id="tangenteChart" width="700" height="400"></canvas>
+
+  <script>
+    const labels = [];
+    const data = [];
+
+    for (let x = 0; x <= 360; x += 5) {
+      const rad = x * Math.PI / 180;
+      const tanValue = Math.tan(rad);
+      // Evitar valores muy grandes donde hay asíntotas (cerca de 90° y 270°)
+      if (Math.abs(tanValue) > 10) {
+        data.push(null); // No se grafica ese punto
+      } else {
+        data.push(tanValue);
+      }
+      labels.push(x);
+    }
+
+    const ctx = document.getElementById('tangenteChart').getContext('2d');
+    const tangenteChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'tan(x)',
+          data: data,
+          borderColor: 'green',
+          borderWidth: 2,
+          fill: false,
+          pointRadius: 0,
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Ángulo (grados)'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'tan(x)'
+            },
+            min: -10,
+            max: 10
+          }
+        }
+      }
+    });
+  </script>
+<a href="index.html">ir al inicio</a>
+</body>
+</html>
